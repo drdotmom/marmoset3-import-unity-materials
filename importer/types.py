@@ -4,9 +4,6 @@ class EmptyStore():
 
         self.path = None
         self.store = None
-        #self.rgb = [1.0, 1.0, 1.0]
-        #self.rgba = [1.0, 1.0, 1.0, 0.0]
-        #self.a = 0.0
 
 
 class FIELD(object):

@@ -21,19 +21,16 @@ scrollbox_window = mset.UIWindow(name="", register=False)
 scrollbox.containedControl = scrollbox_window
 
 
-def get_first(lst):
-    return lst[0]
-
 global checks_list
 checks_list=[]
+
 
 def sunc_scene_materials():
     for mat in mset.getAllMaterials():
         for check in checks_list:
-            #print(mat.name)
-            #print(check.label)
             if mat.name == check.label:
                 check.value = True
+
 
 def import_materials():
 
@@ -80,6 +77,7 @@ def import_materials():
 
     mset.shutdownPlugin()
 
+
 def select_all():
     for i in checks_list:
         i.value = True
@@ -97,6 +95,11 @@ def cancel():
 def refrash_materials_list():
     global u_mats
     global checks_list
+
+    scrollbox_window.clearElements()
+    checks_list.clear()
+    u_mats.clear()
+
     cache = CACHE.cache(folder_line.value)
     u_mats = cache.materials
 

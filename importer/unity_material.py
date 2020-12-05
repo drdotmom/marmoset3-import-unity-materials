@@ -1,5 +1,6 @@
 from . import types
 
+
 class UnityMaterial(object):
 
     def __init__(self, name, matfile, tex_cache):
@@ -20,18 +21,8 @@ class UnityMaterial(object):
         self.shader = types.EmptyStore()
 
 
-        def get_id(line):
-            guid = None
-            try:
-                guid = line.split(' guid: ')[1].split(',')[0]
-            except:
-                guid = None
-            return guid
-
-
         def get_property(mat_data, i, field, tex_cache):
 
-            print('Pass: ', f.name)
             if field.type == 'TEX':
                 try:
                     tex = mat_data[i+1].split(' guid: ')[1].split(',')[0]
@@ -62,9 +53,7 @@ class UnityMaterial(object):
                 try:
                     lst = mat_data[i].split(field.name+': ')[1][:-1].split(',')
                     col = [float(i[4:]) for i in lst]
-                    print(col)
                     f.store = types.RGBA(col)
-                    print(f.store)
                     return f
                 except:
                     f.store = types.EmptyStore()
@@ -95,10 +84,6 @@ class UnityMaterial(object):
                     if line.startswith('    - '+f.name):
                         prop = get_property(mat_data, i, f, tex_cache)
                         props.append(prop)
-                        #break
-                    #else:
-                        #f.store = types.EmptyStore()
-                        #props.append(f)
 
         for uf in props:
             for cf in self.__dict__:

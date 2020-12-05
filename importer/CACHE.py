@@ -31,6 +31,4 @@ class cache(object):
 
         for mat in materials:
             matfile = mat[1]+'/'+mat[0]
-            print('\n')
-            print(mat[0])
             self.materials.append(MAT.UnityMaterial(mat[0], matfile, self.textures))
