@@ -1,8 +1,7 @@
 from importer import CACHE
+from utils import marmoset_materials_utils as mmu
 import mset
 import os
-
-dir = 'E:/Varwin/UralHimCompressor/Assets/uralhim-compressor'
 
 
 global u_mats
@@ -10,7 +9,7 @@ u_mats = []
 
 window = mset.UIWindow("Import Unity Materials")
 window.width = 400
-window.height = 600
+window.height = 800
 
 drawer = mset.UIDrawer(name="Settings")
 drawer_window = mset.UIWindow(name="", register=False)
@@ -50,16 +49,7 @@ def import_materials():
         else:
             mmat = mset.findMaterial(unity_material.name)
 
-        mmat.setSubroutine("albedo", "Albedo")
-        mmat.setSubroutine("reflectivity", "Metalness")
-        mmat.getSubroutine("reflectivity").setField("Channel", 0)
-        mmat.setSubroutine("microsurface", "Gloss")
-        mmat.getSubroutine("microsurface").setField("Channel", 3)
-        mmat.setSubroutine("surface", "Normals")
-        mmat.setSubroutine("occlusion", "Occlusion")
-        mmat.getSubroutine("occlusion").setField("Channel;occlusion", 1)
-        mmat.setSubroutine("emissive", "Emissive")
-
+        mmu.setFields(mmat)
         setField(mmat, "albedo", 'Color', unity_material._Color.store.rgb)
         setField(mmat, "albedo", 'Albedo Map', unity_material._MainTex.store.path)
         setField(mmat, "surface", 'Normal Map', unity_material._BumpMap.store.path)
@@ -116,23 +106,11 @@ def select_folder():
 
 
 folder_line = mset.UITextField()
-folder_line.value = dir
+folder_line.value = ''
 
 folder_button = mset.UIButton()
 folder_button.onClick = select_folder
 folder_button.setIcon(os.path.abspath(os.path.join(os.curdir, "data/gui/control/materialgroupnew.tga")))
-
-refresh_button = mset.UIButton()
-refresh_button.onClick = refrash_materials_list
-refresh_button.text = 'Refresh'
-
-button_import = mset.UIButton()
-button_import.onClick = import_materials
-button_import.text = 'Import'
-
-button_cancel = mset.UIButton()
-button_cancel.onClick = cancel
-button_cancel.text = 'Close'
 
 button_all = mset.UIButton()
 button_all.onClick = select_all
@@ -145,6 +123,18 @@ button_none.text = 'None'
 button_scene = mset.UIButton()
 button_scene.onClick = sunc_scene_materials
 button_scene.text = 'Scene'
+
+refresh_button = mset.UIButton()
+refresh_button.onClick = refrash_materials_list
+refresh_button.text = 'Refresh'
+
+button_cancel = mset.UIButton()
+button_cancel.onClick = cancel
+button_cancel.text = 'Close'
+
+button_import = mset.UIButton()
+button_import.onClick = import_materials
+button_import.text = 'Import'
 
 
 window.addElement(folder_line)
