@@ -8,7 +8,7 @@ class UnityTexture(object):
 
         f = open(path+'/'+tex, 'r')
         for i in f:
-            if i.find('guid: ')!=-1:
+            if i.find('guid: ') != -1:
                 self.guid = i[6:]
                 break
         f.close

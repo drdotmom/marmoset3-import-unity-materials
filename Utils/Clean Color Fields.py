@@ -1,5 +1,6 @@
 import mset
 
+
 for marmoset_material in mset.getAllMaterials():
     try:
         marmoset_material.getSubroutine("albedo").setField("Color", [255.0, 255.0, 255.0])

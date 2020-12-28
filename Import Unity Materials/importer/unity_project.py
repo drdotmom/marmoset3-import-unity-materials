@@ -6,18 +6,15 @@ from . import unity_material as MAT
 
 class cache(object):
 
-    def __init__(self, dir):
+    def __init__(self, path):
 
-        self.materials=[]
-        self.textures=[]
-        self.project_path=dir
+        self.materials = []
+        self.textures = []
+        self.project_path = path
 
         materials = []
         textures = []
         for dirs, folders, files in os.walk(self.project_path):
-            
-            if dirs.find('VarwinObjects')!=-1:
-                continue
 
             for f in files:
                 if f.endswith('.mat'):
@@ -31,4 +28,5 @@ class cache(object):
 
         for mat in materials:
             matfile = mat[1]+'/'+mat[0]
-            self.materials.append(MAT.UnityMaterial(mat[0], matfile, self.textures))
+            self.materials.append(MAT.UnityMaterial(mat[0], matfile,
+                                                    self.textures))

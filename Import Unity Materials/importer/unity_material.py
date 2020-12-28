@@ -20,7 +20,6 @@ class UnityMaterial(object):
         self._EmissionColor = types.EmptyStore()
         self.shader = types.EmptyStore()
 
-
         def get_property(mat_data, i, field, tex_cache):
 
             if field.type == 'TEX':
@@ -33,13 +32,13 @@ class UnityMaterial(object):
                             f.store = c_tex
                             return f
                             break
-                    if find == False:
+                    if find is False:
                         f.store = types.EmptyStore()
                         return f
                 except:
                     f.store = types.EmptyStore()
                     return f
-                
+
             if field.type == 'VAL':
                 try:
                     val = mat_data[i].split(field.name+': ')[1]
@@ -48,7 +47,7 @@ class UnityMaterial(object):
                 except:
                     f.store = types.EmptyStore()
                     return f
-                
+
             if field.type == 'COL':
                 try:
                     lst = mat_data[i].split(field.name+': ')[1][:-1].split(',')
@@ -58,7 +57,6 @@ class UnityMaterial(object):
                 except:
                     f.store = types.EmptyStore()
                     return f
-
 
         fields = [
             types.FIELD(['_BumpMap', 'TEX', types.EmptyStore()]),

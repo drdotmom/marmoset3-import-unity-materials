@@ -1,4 +1,4 @@
-image_formats=[
+image_formats = [
     '.png.meta',
     '.jpg.meta',
     '.tga.meta',

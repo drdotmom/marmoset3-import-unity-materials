@@ -1,7 +1,7 @@
-from importer import CACHE
-from utils import marmoset_materials_utils as mmu
-import mset
 import os
+import mset
+from importer import unity_project.cache as UPROJECT
+from utils import marmoset_materials_utils as MMU
 
 
 global u_mats
@@ -21,7 +21,7 @@ scrollbox.containedControl = scrollbox_window
 
 
 global checks_list
-checks_list=[]
+checks_list = []
 
 
 def sunc_scene_materials():
@@ -36,7 +36,7 @@ def import_materials():
     def apply_material(unity_material):
 
         def setField(mmat, Sub, Field, Value):
-            if Value != None:
+            if Value is not None:
                 mmat.getSubroutine(Sub).setField(Field, Value)
 
         inScene = False
@@ -44,23 +44,38 @@ def import_materials():
             if mat.name == unity_material.name:
                 inScene = True
 
-        if inScene==False:
+        if inScene is False:
             mmat = mset.Material(unity_material.name)
         else:
             mmat = mset.findMaterial(unity_material.name)
 
-        mmu.setFields(mmat)
-        setField(mmat, "albedo", 'Color', unity_material._Color.store.rgb)
-        setField(mmat, "albedo", 'Albedo Map', unity_material._MainTex.store.path)
-        setField(mmat, "surface", 'Normal Map', unity_material._BumpMap.store.path)
-        setField(mmat, "microsurface", 'Gloss Map', unity_material._MetallicGlossMap.store.path)
-        setField(mmat, "reflectivity", 'Metalness Map', unity_material._MetallicGlossMap.store.path)
-        setField(mmat, "occlusion", 'Occlusion Map', unity_material._OcclusionMap.store.path)
-        setField(mmat, "emissive", 'Color', unity_material._EmissionColor.store.rgb)
-        setField(mmat, "emissive", 'Emissive Map', unity_material._EmissionMap.store.path)
+        MMU.setFields(mmat)
+        setField(mmat, "albedo", 'Color',
+                 unity_material._Color.store.rgb)
+
+        setField(mmat, "albedo", 'Albedo Map',
+                 unity_material._MainTex.store.path)
+
+        setField(mmat, "surface", 'Normal Map',
+                 unity_material._BumpMap.store.path)
+
+        setField(mmat, "microsurface", 'Gloss Map',
+                 unity_material._MetallicGlossMap.store.path)
+
+        setField(mmat, "reflectivity", 'Metalness Map',
+                 unity_material._MetallicGlossMap.store.path)
+
+        setField(mmat, "occlusion", 'Occlusion Map',
+                 unity_material._OcclusionMap.store.path)
+
+        setField(mmat, "emissive", 'Color',
+                 unity_material._EmissionColor.store.rgb)
+
+        setField(mmat, "emissive", 'Emissive Map',
+                 unity_material._EmissionMap.store.path)
 
     for i in checks_list:
-        if i.value == True:
+        if i.value is True:
             for mat in u_mats:
                 if mat.name == i.label:
                     apply_material(mat)
@@ -90,7 +105,7 @@ def refrash_materials_list():
     checks_list.clear()
     u_mats.clear()
 
-    cache = CACHE.cache(folder_line.value)
+    cache = UPROJECT(folder_line.value)
     u_mats = cache.materials
 
     for i in u_mats:
@@ -110,7 +125,8 @@ folder_line.value = ''
 
 folder_button = mset.UIButton()
 folder_button.onClick = select_folder
-folder_button.setIcon(os.path.abspath(os.path.join(os.curdir, "data/gui/control/materialgroupnew.tga")))
+folder_button.setIcon(os.path.abspath(os.path.join(
+                      os.curdir, "data/gui/control/materialgroupnew.tga")))
 
 button_all = mset.UIButton()
 button_all.onClick = select_all

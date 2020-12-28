@@ -20,6 +20,6 @@ def swapOcclusion(marmoset_material):
     albedo = marmoset_material.getSubroutine("albedo").getField("Albedo Map")
     occlusion = marmoset_material.getSubroutine("occlusion").getField("Occlusion Map")
 
-    if albedo != None or occlusion != None:
+    if albedo is not None or occlusion is not None:
         marmoset_material.getSubroutine("albedo").setField("Albedo Map", occlusion)
         marmoset_material.getSubroutine("occlusion").setField("Occlusion Map", albedo)
