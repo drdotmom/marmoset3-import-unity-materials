@@ -1,6 +1,6 @@
 import os
 import mset
-from importer import unity_project.cache as UPROJECT
+from importer.unity_project import cache as UPROJECT
 from utils import marmoset_materials_utils as MMU
 
 
